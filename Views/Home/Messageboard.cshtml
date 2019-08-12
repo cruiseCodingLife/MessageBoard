@@ -1,0 +1,49 @@
+﻿@page
+@{
+}
+<div class="text-center">
+        Your name :
+        <div>
+            <input type="text" class="form" id="name" name="name" maxlength="10";>
+        </div>
+        <BR>
+        <BR>
+        Message content :
+        <div>
+            <input type="text" class="form" id="content" name="content" maxlength="20" ;>
+        </div>
+        <BR>
+        <BR>
+        <div>
+            <input type="button" value="Submit" onClick="go()">
+        </div>
+        <BR>
+        <BR>
+        <div id="block"></div>
+</div>
+        <script>
+            function go() {
+                if ($("#name").val() == "" || $("#content").val() == "") {
+                    window.alert("No input content specified !!");
+                } else {
+                    $.ajax({
+                        type: "POST",
+                        url: "../Home/PostMessage",
+                        contentType: "application/json",
+                        data: JSON.stringify({
+                            name: $("#name").val(),
+                            content: $("#content").val()
+                        }),
+                        success: function (data) {
+                            console.log("OK");
+                        }
+                    });
+                    $("#block").html("Wait a second.....");
+                    window.setTimeout(goIndex, 3 * 1000);
+                    function goIndex() {
+                        window.location.href = '../Home/Index';
+                    }
+                }
+            }
+
+        </script>
